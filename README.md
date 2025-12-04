@@ -25,3 +25,11 @@ We welcome submissions! To add your script to the market:
    function droidRun(ctx) {
        // Your code here
    }
+   ```
+
+4.  Submit a **Pull Request**.
+5.  Once merged, the auto-indexer will add it to the app instantly.
+
+## ⚠️ Disclaimer
+
+Scripts are contributed by the community. While we review Pull Requests, please review the code before running it on your device.
