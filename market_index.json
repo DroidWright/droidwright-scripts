@@ -1,0 +1,10 @@
+[
+  {
+    "id": "market-example",
+    "name": "Welcome to Market",
+    "description": "This is an example script hosted on the online market.",
+    "author": "tas33n",
+    "version": "1.0.0",
+    "downloadUrl": "https://raw.githubusercontent.com/DroidWright/droidwright-scripts/main/scripts/example.js"
+  }
+]
