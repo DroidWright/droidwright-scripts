@@ -1,0 +1,75 @@
+name: Update Market Index
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'scripts/**.js'
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Generate Index JSON
+      run: |
+        python3 -c "
+        import os
+        import json
+        import re
+
+        scripts_dir = 'scripts'
+        base_url = 'https://raw.githubusercontent.com/${{ github.repository }}/main/'
+        index = []
+
+        # Regex to parse headers
+        def parse_header(content, key):
+            match = re.search(f'// @{key}\s+(.*)', content)
+            return match.group(1).strip() if match else ''
+
+        if os.path.exists(scripts_dir):
+            for filename in os.listdir(scripts_dir):
+                if filename.endswith('.js'):
+                    filepath = os.path.join(scripts_dir, filename)
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                        
+                        # Only index files with DroidScript header
+                        if '// ==DroidScript==' in content:
+                            entry = {
+                                'id': parse_header(content, 'id') or filename.replace('.js', ''),
+                                'name': parse_header(content, 'name') or filename,
+                                'description': parse_header(content, 'description'),
+                                'author': parse_header(content, 'author'),
+                                'version': parse_header(content, 'version') or '1.0.0',
+                                'downloadUrl': base_url + 'scripts/' + filename
+                            }
+                            index.append(entry)
+
+        with open('market_index.json', 'w') as f:
+            json.dump(index, f, indent=2)
+        print(f'Generated index with {len(index)} scripts.')
+        "
+
+    - name: Commit and Push changes
+      run: |
+        git config --global user.name 'GitHub Action'
+        git config --global user.email 'action@github.com'
+        git add market_index.json
+        # Only commit if the file actually changed
+        if git diff --staged --quiet; then
+          echo "No changes to index."
+        else
+          git commit -m "Auto-update market_index.json"
+          git push
+        fi
