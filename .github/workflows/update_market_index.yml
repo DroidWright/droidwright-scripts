@@ -49,6 +49,7 @@ jobs:
                             entry = {
                                 'id': parse_header(content, 'id') or filename.replace('.js', ''),
                                 'name': parse_header(content, 'name') or filename,
+                                'icon': parse_header(content, 'icon'),
                                 'description': parse_header(content, 'description'),
                                 'author': parse_header(content, 'author'),
                                 'version': parse_header(content, 'version') or '1.0.0',
