@@ -2,9 +2,19 @@
   {
     "id": "market-example",
     "name": "Welcome to Market",
+    "icon": "",
     "description": "This is an example script hosted on the online market.",
     "author": "tas33n",
     "version": "1.0.0",
     "downloadUrl": "https://raw.githubusercontent.com/DroidWright/droidwright-scripts/main/scripts/example.js"
+  },
+  {
+    "id": "instagram-like-comment",
+    "name": "Instagram Like & Comment",
+    "icon": "https://www.google.com/s2/favicons?sz=64&domain=instagram.com",
+    "description": "Likes posts and adds comments on Instagram feed with scroll retry logic.",
+    "author": "tas33n",
+    "version": "1.0.0",
+    "downloadUrl": "https://raw.githubusercontent.com/DroidWright/droidwright-scripts/main/scripts/instagram-like-comment.js"
   }
 ]
